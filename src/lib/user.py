@@ -1,4 +1,7 @@
 from .mutex import Mutex
+from .log import Logger
+
+log = Logger('USER').get_logger()
 
 class User:
     def __init__(self) -> None:
@@ -23,15 +26,18 @@ class User:
                     "sock_name" : sock_name
                 }
                 self.users[user_id] = user
+                log.info("Add new user id : {} successed".format(user_id))
             else:
                 self.users[user_id]["host"] = server_host
                 self.users[user_id]["sock_name"] = sock_name
-    
+                log.info("Update user id : {} successed".format(user_id))
+
     def delete_user(self,user_id):
         lock = self.get_lock(self.user_mutex_id)
         with lock:
             if user_id in self.users:
                 del self.users[user_id]
+                log.info("Delete user id : {} successed".format(user_id))
 
     def has_user(self,user_id):
         lock = self.get_lock(self.user_mutex_id)
@@ -58,3 +64,4 @@ class User:
         lock = self.get_lock(self.user_mutex_id)
         with lock:
             self.users = dict()
+            log.debug("Close all user")

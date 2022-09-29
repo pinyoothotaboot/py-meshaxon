@@ -1,6 +1,9 @@
 from re import T
 from .event import *
 from .parse import *
+from .log import Logger
+
+log = Logger('IMPLEMENT').get_logger()
 
 def cmd_packet(event,payload):
     return "<{}<>{}>".format(event,json_to_string(payload))
@@ -23,14 +26,15 @@ def join_lobbie(payload,messages,lock_message,user,lock_user,connection,internal
 
                 with lock_message:
                     messages.add_message(internal_client,cmd)
+                    log.info("client : {} add message successed".format(internal_client))
         
         connection.set_username(user_id)
         connection.notify(f"Join user id : {user_id} successed")
     except ValueError as ve:
-        print("Value error : {}".format(ve))
+        log.error("Value error : {}".format(ve))
         connection.notify(f"Not found value of payload!.")
     except KeyError as ke:
-        print("Key error : {}".format(ke))
+        log.error("Key error : {}".format(ve))
         connection.notify(f"Not found key of payload!.")
 
 def add_user_to_lobbie(payload,user,lock_user):
@@ -43,9 +47,9 @@ def add_user_to_lobbie(payload,user,lock_user):
             user.add_user(user_id,host,sock_name)
 
     except ValueError as ve:
-        print("Value error : {}".format(ve))
+        log.error("Value error : {}".format(ve))
     except KeyError as ke:
-        print("Key error : {}".format(ke))
+        log.error("Key error : {}".format(ve))
 
 def publish_message(payload,messages,lock_message,user,lock_user,database,lock_database,connection):
     try:
@@ -72,10 +76,10 @@ def publish_message(payload,messages,lock_message,user,lock_user,database,lock_d
                 messages.add_message(to_host_user,cmd)
 
     except ValueError as ve:
-        print("Value error : {}".format(ve))
+        log.error("Value error : {}".format(ve))
         connection.notify(f"Not found value of payload!.")
     except KeyError as ke:
-        print("Key error : {}".format(ke))
+        log.error("Key error : {}".format(ve))
         connection.notify(f"Not found key of payload!.")
 
 def send_message_to_user(payload,database,lock_database):
@@ -87,6 +91,6 @@ def send_message_to_user(payload,database,lock_database):
             database.publish(to_user_id,cmd)
 
     except ValueError as ve:
-        print("Value error : {}".format(ve))
+        log.error("Value error : {}".format(ve))
     except KeyError as ke:
-        print("Key error : {}".format(ke))
+        log.error("Key error : {}".format(ve))
