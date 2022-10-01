@@ -17,7 +17,7 @@ EVENT_SEND_MASSAGE_TO_USER   = "{}:{}:{}:send_message_to_user".format(VERSION_1,
 
 # Server -> CLient
 EVENT_RECIEVE_MESSAGE_FROM_ROOM   = "{}:{}:{}:recieve_message_from_room".format(VERSION_1,ON,LEVEL_ROOM)
-EVENT_RECIEVE_MESSAGE_FROM_USER   = "{}:{}:{}:recieve_message_from_user".format(VERSION_1,ON,LEVEL_ROOM)
+EVENT_RECIEVE_MESSAGE_FROM_USER   = "{}:{}:{}:recieve_message_from_user".format(VERSION_1,ON,LEVEL_PEER)
 
 # Server -> Server
 EVENT_SERVER_JOIN_LOBBIE = "{}:{}:{}:join_lobbie".format(VERSION_1,EMIT,LEVEL_SERVER)
