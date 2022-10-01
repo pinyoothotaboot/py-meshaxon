@@ -247,7 +247,6 @@ class Server:
             
             self.sleep(1)
 
-
     def event(self,host,port,event):
         name = "{}:{}".format(host,port)
         my_server_name = self.get_server_name()
